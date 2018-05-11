@@ -1,0 +1,30 @@
+﻿@using System.Web.UI.WebControls
+@model InterviewQuestionGenerator.ViewModel.CategoriesForSingleQuestionViewModel
+@{
+    ViewBag.Title = "QuestionForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Question</h2>
+
+@using (Html.BeginForm("Save", "Question"))
+{
+    @Html.ValidationSummary(true, "Please fix the errors below before continuing.")
+    <div class="form-group">
+        @Html.LabelFor(m => m.Question.Question)
+        @Html.TextBoxFor(m => m.Question.Question, new { @class="form-control" })
+        @Html.ValidationMessageFor(m => m.Question.Question)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Question.QuestionCategoryId)
+        @Html.DropDownListFor(m => m.Question.QuestionCategoryId ,new SelectList(Model.Categories, "Id", "Category"), "Select Question Category", new { @class ="form-control"})
+        @Html.ValidationMessageFor(m => m.Question.QuestionCategoryId)
+    </div>
+    @Html.HiddenFor(q => q.Question.Id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn-primary btn">Save</button>
+
+}
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

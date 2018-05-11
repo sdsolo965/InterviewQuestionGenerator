@@ -1,0 +1,33 @@
+﻿@model InterviewQuestionGenerator.ViewModel.QuestionCategoryViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="container-fluid">
+    <h2>Questions</h2>
+    @Html.ActionLink("New Question", "New", "Question", null, new {@class = "btn btn-primary"})
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Question</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in Model.Questions)
+            {
+                <tr>
+                    <td>@Model.Categories.SingleOrDefault(c => c.Id == question.QuestionCategoryId).Category</td>
+                    <td>@question.Question</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Question", new { id = question.Id }, new{@class="btn btn-info"})
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
