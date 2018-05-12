@@ -21,21 +21,21 @@ namespace InterviewQuestionGenerator.Controllers.Api
 
         //GET /api/student
         [HttpGet]
-        public IEnumerable<StudentDto> GetStudents()
+        public IHttpActionResult GetStudents()
         {
-            return _context.Students.ToList().Select(Mapper.Map<Student, StudentDto>);
+            return Ok(_context.Students.ToList().Select(Mapper.Map<Student, StudentDto>));
         }
 
         //GET /api/student/1
         [HttpGet]
-        public StudentDto GetStudent(int id)
+        public IHttpActionResult GetStudent(int id)
         {
             var student = _context.Students.SingleOrDefault(s => s.Id == id);
 
             if (student == null)
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
 
-            return Mapper.Map<Student, StudentDto>(student);
+            return Ok(Mapper.Map<Student, StudentDto>(student));
         }
 
         //POST /api/studentDto

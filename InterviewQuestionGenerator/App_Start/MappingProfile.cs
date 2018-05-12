@@ -13,6 +13,8 @@ namespace InterviewQuestionGenerator.App_Start
         public MappingProfile()
         {
             Mapper.CreateMap<Student, StudentDto>();
+            Mapper.CreateMap<StudentDto, Student>();
+            Mapper.CreateMap<QuestionDto, InterviewQuestion>();
             Mapper.CreateMap<InterviewQuestion, QuestionDto>();
         }
     }

@@ -21,26 +21,26 @@ namespace InterviewQuestionGenerator.Controllers.Api
         }
         //GET /api/question
         [HttpGet]
-        public IEnumerable<QuestionDto> GetQuestion()
+        public IHttpActionResult GetQuestion()
         {
-            return _context.Questions.ToList().Select(Mapper.Map<InterviewQuestion, QuestionDto>);
+            return Ok(_context.Questions.ToList().Select(Mapper.Map<InterviewQuestion, QuestionDto>));
         }
 
         //GET /api/question/1
         [HttpGet]
-        public QuestionDto GetQuestion(int id)
+        public IHttpActionResult GetQuestion(int id)
         {
             var question = _context.Questions.SingleOrDefault(s => s.Id == id);
 
             if (question == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            return Mapper.Map<InterviewQuestion, QuestionDto>(question);
+            return Ok(Mapper.Map<InterviewQuestion, QuestionDto>(question));
         }
 
         //POST /api/question
         [HttpPost]
-        public InterviewQuestion CreateQuestion(InterviewQuestion question)
+        public IHttpActionResult CreateQuestion(InterviewQuestion question)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -48,7 +48,7 @@ namespace InterviewQuestionGenerator.Controllers.Api
             _context.Questions.Add(question);
             _context.SaveChanges();
 
-            return question;
+            return Created(new Uri(Request.RequestUri + "/" + question.Id), question);
         }
 
         //PUT /api/question/1
