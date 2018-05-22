@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InterviewQuestionGenerator.Models;
+using InterviewQuestionGenerator.ViewModel;
 
 namespace InterviewQuestionGenerator.Controllers
 {
@@ -29,8 +30,9 @@ namespace InterviewQuestionGenerator.Controllers
 
         public ViewResult Index()
         {
-            var students = _context.Students.ToList();
-            return View(students);
+            if (User.IsInRole(RoleName.CanManageStudents))
+                return View("List");
+            return View("NonDeleteEditList");
         }
 
         public ActionResult Details(int id)
@@ -41,10 +43,16 @@ namespace InterviewQuestionGenerator.Controllers
             return View(students);
         }
 
+        [Authorize(Roles = RoleName.CanManageStudents)]
         public ActionResult New()
         {
-            var student = new Student();
-            return View("StudentForm", student);
+            var cohorts = _context.Cohorts.ToList();
+            var viewModel = new CohortsForSingleStudentViewModel
+            {
+                CohortTypes = cohorts,
+                Student = new Student()
+            };
+            return View("StudentForm",viewModel);
         }
 
         [HttpPost]
@@ -52,7 +60,16 @@ namespace InterviewQuestionGenerator.Controllers
         public ActionResult Save(Student student)
         {
             if (!ModelState.IsValid)
-                return View("StudentForm", student);
+            {
+                var cohorts = _context.Cohorts.ToList();
+                var viewModel = new CohortsForSingleStudentViewModel
+                {
+                    CohortTypes = cohorts,
+                    Student = student
+                };
+                return View("StudentForm", viewModel);
+
+            }
 
             if (student.Id == 0)
                 _context.Students.Add(student);
@@ -60,6 +77,7 @@ namespace InterviewQuestionGenerator.Controllers
             {
                 var studentInDb = _context.Students.Single(s => s.Id == student.Id);
                 studentInDb.Name = student.Name;
+                studentInDb.CohortTypeId = student.CohortTypeId;
             }
 
             _context.SaveChanges();
@@ -69,11 +87,17 @@ namespace InterviewQuestionGenerator.Controllers
 
         public ActionResult Edit(int id)
         {
+            var cohorts = _context.Cohorts.ToList();
             var student = _context.Students.SingleOrDefault(s => s.Id == id);
             if (student == null)
                 return HttpNotFound();
+            var viewModel = new CohortsForSingleStudentViewModel
+            {
+                CohortTypes = cohorts,
+                Student = student
+            };
 
-            return View("StudentForm", student);
+            return View("StudentForm", viewModel);
 
         }
     }

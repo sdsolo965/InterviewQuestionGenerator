@@ -13,7 +13,7 @@ namespace InterviewQuestionGenerator.Dtos
 
         public int Id { get; set; }
 
-        public QuestionCategory QuestionCategory { get; set; }
+        public QuestionCategoryDto QuestionCategory { get; set; }
 
         public byte QuestionCategoryId { get; set; }
     }

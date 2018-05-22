@@ -79,6 +79,11 @@ namespace InterviewQuestionGenerator.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Cohort")]
+        public IEnumerable<CohortType> CohortTypes { get; set; }
+        
+        public Student Student { get; set; }
     }
 
     public class ResetPasswordViewModel

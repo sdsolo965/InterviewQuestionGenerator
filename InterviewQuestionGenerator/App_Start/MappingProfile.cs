@@ -16,6 +16,7 @@ namespace InterviewQuestionGenerator.App_Start
             Mapper.CreateMap<StudentDto, Student>();
             Mapper.CreateMap<QuestionDto, InterviewQuestion>();
             Mapper.CreateMap<InterviewQuestion, QuestionDto>();
+            Mapper.CreateMap<QuestionCategory, QuestionCategoryDto>();
         }
     }
 }

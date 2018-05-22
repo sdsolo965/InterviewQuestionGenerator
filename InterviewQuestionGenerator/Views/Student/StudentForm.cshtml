@@ -1,5 +1,5 @@
 ﻿
-@model InterviewQuestionGenerator.Models.Student
+@model InterviewQuestionGenerator.ViewModel.CohortsForSingleStudentViewModel
 @{
     ViewBag.Title = "QuestionForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,11 +11,16 @@
 {
     @Html.ValidationSummary(true, "Please fix the errors below before continuing.")
     <div class="form-group">
-        @Html.LabelFor(s => s.Name)
-        @Html.TextBoxFor(s => s.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(s => s.Name)
+        @Html.LabelFor(s => s.Student.Name)
+        @Html.TextBoxFor(s => s.Student.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(s => s.Student.Name)
     </div>
-    @Html.HiddenFor(s => s.Id)
+    <div class="form-group">
+        @Html.LabelFor(c => c.Student.CohortTypeId)
+        @Html.DropDownListFor(c => c.Student.CohortTypeId, new SelectList(Model.CohortTypes, "Id", "Name"), "Select Students Cohort", new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Student.CohortTypeId)
+    </div>
+    @Html.HiddenFor(s => s.Student.Id)
     @Html.AntiForgeryToken()
     <button type="submit" class="btn-primary btn">Save</button>
 

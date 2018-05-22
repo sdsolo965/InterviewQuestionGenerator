@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -23,7 +24,11 @@ namespace InterviewQuestionGenerator.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetStudents()
         {
-            return Ok(_context.Students.ToList().Select(Mapper.Map<Student, StudentDto>));
+            var studentDtos = _context.Students
+                .Include(s => s.CohortType)
+                .ToList()
+                .Select(Mapper.Map<Student, StudentDto>);
+            return Ok(studentDtos);
         }
 
         //GET /api/student/1

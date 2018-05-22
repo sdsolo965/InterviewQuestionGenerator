@@ -23,6 +23,7 @@ namespace InterviewQuestionGenerator.Models
         public DbSet<Student> Students { get; set; }
         public DbSet<InterviewQuestion> Questions { get; set; }
         public DbSet<QuestionCategory> Categories { get; set; }
+        public DbSet<CohortType> Cohorts { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

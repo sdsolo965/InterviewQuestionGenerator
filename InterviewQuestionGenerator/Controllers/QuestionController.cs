@@ -40,15 +40,7 @@ namespace InterviewQuestionGenerator.Controllers
 
         public ViewResult Index()
         {
-            var questions = _context.Questions.ToList();
-            var categories = _context.Categories.ToList();
-            var viewModel = new QuestionCategoryViewModel()
-            {
-                Categories = categories,
-                Questions = questions
-            };
-
-            return View(viewModel);
+            return View();
         }
 
         public ActionResult New()

@@ -9,17 +9,21 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InterviewQuestionGenerator.Models;
+using InterviewQuestionGenerator.ViewModel;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace InterviewQuestionGenerator.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext _context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -139,7 +143,13 @@ namespace InterviewQuestionGenerator.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var cohorts = _context.Cohorts.ToList();
+            var viewModel = new RegisterViewModel()
+            {
+                CohortTypes = cohorts,
+                Student = new Student(),
+            };
+            return View(viewModel);
         }
 
         //
@@ -149,12 +159,31 @@ namespace InterviewQuestionGenerator.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            
+
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    if (model.Student.Id == 0)
+                        _context.Students.Add(model.Student);
+                    else
+                    {
+                        var studentInDb = _context.Students.Single(s => s.Id == model.Student.Id);
+                        studentInDb.Name = model.Student.Name;
+                        studentInDb.CohortTypeId = model.Student.CohortTypeId;
+                    }
+                    _context.SaveChanges();
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -169,7 +198,13 @@ namespace InterviewQuestionGenerator.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            var cohorts = _context.Cohorts.ToList();
+            var viewModel = new RegisterViewModel()
+            {
+                CohortTypes = cohorts,
+                Student = model.Student,
+            };
+            return View(viewModel);
         }
 
         //

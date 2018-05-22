@@ -1,0 +1,78 @@
+﻿@model IEnumerable<InterviewQuestionGenerator.Models.Student>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class=" container-fluid">
+    <h2>Students</h2>
+    <div>
+        @Html.ActionLink("New Student", "New", "Student", null, new { @class = "btn btn-primary" })
+        <br/>
+        <br/>
+    </div>
+    <table id="students" class="table table-responsive table-hover">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Cohort</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+@section scripts{
+<script>
+        $(document).ready(function () {
+            var table = $("#students").DataTable({
+                    ajax: {
+                        url: "/api/students",
+                        dataSrc: ""
+                    },
+                    columns:
+                    [
+                        {
+                            data: "name"
+                        },
+                        {
+                            data: "cohortType.name"
+                        },
+                        {
+                            data: "id",
+                            render: function(data) {
+                                return "<a href='/student/edit/" + data + "'>Edit</a>";
+                            }
+            },
+                    {
+                        data: "id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-student-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+
+            $("#students").on("click", ".js-delete",
+                function() {
+                    var button = $(this);
+
+                    bootbox.confirm("Are you sure you want to delete this student?",
+                        function(result) {
+                            if (result) {
+                                $.ajax({
+                                    url: "/api/students/" + button.attr("data-student-id"),
+                                    method: "Delete",
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw();
+                                    }
+                                });
+                            }
+                        });
+                });
+        });
+</script>
+}
