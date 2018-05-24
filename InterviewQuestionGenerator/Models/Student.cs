@@ -19,5 +19,7 @@ namespace InterviewQuestionGenerator.Models
         [Required(ErrorMessage = "Please give the Student a Cohort.")]
         [Display(Name = "Cohort")]
         public byte CohortTypeId { get; set; }
+
+        public bool IsSelectedForQuestions { get; set; }
     }
 }

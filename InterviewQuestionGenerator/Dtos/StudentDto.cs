@@ -16,5 +16,7 @@ namespace InterviewQuestionGenerator.Dtos
         public CohortType CohortType { get; set; }
 
         public byte CohortTypeId { get; set; }
+
+        public bool IsSelectedForQuestions { get; set; }
     }
 }

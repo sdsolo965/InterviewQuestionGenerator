@@ -406,6 +406,17 @@ namespace InterviewQuestionGenerator.Controllers
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    //Create new student in Database
+                    if (model.Student.Id == 0)
+                        _context.Students.Add(model.Student);
+                    else
+                    {
+                        var studentInDb = _context.Students.Single(s => s.Id == model.Student.Id);
+                        studentInDb.Name = model.Student.Name;
+                        studentInDb.CohortTypeId = model.Student.CohortTypeId;
+                    }
+                    _context.SaveChanges();
+
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
@@ -416,8 +427,15 @@ namespace InterviewQuestionGenerator.Controllers
                 AddErrors(result);
             }
 
+            var cohorts = _context.Cohorts.ToList();
+            var viewModel = new ExternalLoginConfirmationViewModel()
+            {
+                CohortTypes = cohorts,
+                Student = model.Student,
+            };
+
             ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            return View(viewModel);
         }
 
         //

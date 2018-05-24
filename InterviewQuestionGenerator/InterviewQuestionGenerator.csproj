@@ -431,6 +431,10 @@
     <Compile Include="Migrations\201805201603573_PopulateCohortTypes.Designer.cs">
       <DependentUpon>201805201603573_PopulateCohortTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805232012435_AddedIsSelectedToStudent.cs" />
+    <Compile Include="Migrations\201805232012435_AddedIsSelectedToStudent.Designer.cs">
+      <DependentUpon>201805232012435_AddedIsSelectedToStudent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CohortType.cs" />
@@ -559,6 +563,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\zocial.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -729,6 +734,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805201603573_PopulateCohortTypes.resx">
       <DependentUpon>201805201603573_PopulateCohortTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805232012435_AddedIsSelectedToStudent.resx">
+      <DependentUpon>201805232012435_AddedIsSelectedToStudent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -13,50 +13,63 @@
     </div>
     <table id="students" class="table table-responsive table-hover">
         <thead>
-            <tr>
-                <th>Student Name</th>
-                <th>Cohort</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
+        <tr>
+            <th>Active</th>
+            <th>Student Name</th>
+            <th>Cohort</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
         </thead>
         <tbody>
             
         </tbody>
     </table>
 </div>
+<div>
+    @Html.ActionLink("Save", "New", "Student", null, new { @class = "btn btn-primary" })
+</div>
 @section scripts{
-<script>
-        $(document).ready(function () {
+    <script>
+        $(document).ready(function() {
+
             var table = $("#students").DataTable({
-                    ajax: {
-                        url: "/api/students",
-                        dataSrc: ""
+                ajax: {
+                    url: "/api/students",
+                    dataSrc: ""
+                },
+                columns:
+                [
+                    {
+                        data: "isSelectedForQuestions",
+                        render: function(data) {
+                            return (data === true) ? "<input type='checkbox' id='action1' value=" + data + " checked >" :
+                                "<input type='checkbox' id='action1' value=" + data + " >";
+                        }
                     },
-                    columns:
-                    [
-                        {
-                            data: "name"
-                        },
-                        {
-                            data: "cohortType.name"
-                        },
-                        {
-                            data: "id",
-                            render: function(data) {
-                                return "<a href='/student/edit/" + data + "'>Edit</a>";
-                            }
-            },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "cohortType.name"
+                    },
                     {
                         data: "id",
                         render: function(data) {
-                            return "<button class='btn-link js-delete' data-student-id=" + data + ">Delete</button>";
+                            return "<a id='studentId' value=" + data + " href='/student/edit/" + data + "'>Edit</a>";
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function(data) {
+                            return "<button class='btn-link .js-delete' data-student-id=" + data + ">Delete</button>";
                         }
                     }
                 ]
             });
 
-            $("#students").on("click", ".js-delete",
+            $("#students").on("click",
+                ".js-delete",
                 function() {
                     var button = $(this);
 
@@ -73,6 +86,21 @@
                             }
                         });
                 });
+
+            $("#students").on('change', '#action1', function () {
+                var value = $(this).val();
+                var rowData = table.row($(this).parents('tr')).data();
+                $.ajax({
+                    type: "Put",
+                    url: "/api/students?id=" + rowData.id + '&isSelected=' + value,
+                    async: true,
+                    success: function (msg) {
+                        bootbox.alert("Student has been updated for this session");
+                        table.ajax.reload();
+                    }
+                });
+            });
+
         });
-</script>
-}
+    </script>
+    }

@@ -14,6 +14,12 @@ namespace InterviewQuestionGenerator
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "IsSelectedStudentUpdate",
+                url: "{controller}/{action}/{id}/{isSelected}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, isSelected = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

@@ -8,6 +8,11 @@ namespace InterviewQuestionGenerator.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Cohort")]
+        public IEnumerable<CohortType> CohortTypes { get; set; }
+
+        public Student Student { get; set; }
     }
 
     public class ExternalLoginListViewModel

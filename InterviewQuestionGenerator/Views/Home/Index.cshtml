@@ -5,7 +5,7 @@
 <div class="jumbotron text-center">
     <h1>MSSA Interview Question Generator</h1>
     <p class="lead">From behavioral questions to sorting algorithms, test your knowledge and prepare for an interview</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Test Now</a></p>
+    @Html.ActionLink("Test Now", "Random", "Question", null, new { @class = "btn btn-primary" })
 </div>
 
 <div class="row">

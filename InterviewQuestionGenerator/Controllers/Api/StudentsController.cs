@@ -76,6 +76,21 @@ namespace InterviewQuestionGenerator.Controllers.Api
             _context.SaveChanges();
         }
 
+        //Put /api/studentDto/1
+        [HttpPut]
+        public void UpdateStudent(int id, bool isSelected)
+        {
+
+            var studentInDb = _context.Students.SingleOrDefault(s => s.Id == id);
+
+            if (studentInDb == null)
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            studentInDb.IsSelectedForQuestions = (isSelected == true) ? false : true;
+
+            _context.SaveChanges();
+        }
+
         //DELETE /api/student/1
         [HttpDelete]
         public void DeleteStudent(int id)

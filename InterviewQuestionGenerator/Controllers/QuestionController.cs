@@ -11,10 +11,12 @@ namespace InterviewQuestionGenerator.Controllers
     public class QuestionController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private static Random _random;
 
         public QuestionController()
         {
             _context = new ApplicationDbContext();
+            _random = new Random();
         }
 
         protected override void Dispose(bool disposing)
@@ -23,9 +25,10 @@ namespace InterviewQuestionGenerator.Controllers
         }
 
         // GET: Question
-        public ActionResult Random(int id)
+        public ActionResult Random()
         {
-            
+            var studentIds = _context.Students.Select(s => s.Id).ToList();
+            int listMax = studentIds.Count();
             
             return View();
         }
