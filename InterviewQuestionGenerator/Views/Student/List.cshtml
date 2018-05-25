@@ -43,7 +43,7 @@
                     {
                         data: "isSelectedForQuestions",
                         render: function(data) {
-                            return (data === true) ? "<input type='checkbox' id='action1' value=" + data + " checked >" :
+                            return (data === true) ? "<input type='checkbox' id='actionChk' value=" + data + " checked >" :
                                 "<input type='checkbox' id='action1' value=" + data + " >";
                         }
                     },
@@ -62,16 +62,16 @@
                     {
                         data: "id",
                         render: function(data) {
-                            return "<button class='btn-link .js-delete' data-student-id=" + data + ">Delete</button>";
+                            return "<button class='btn-link .js-delete' id='actionDel' data-student-id=" + data + ">Delete</button>";
                         }
                     }
                 ]
             });
 
             $("#students").on("click",
-                ".js-delete",
-                function() {
-                    var button = $(this);
+                "#actionDel",
+                function(e) {
+                    var button = $(e.target);
 
                     bootbox.confirm("Are you sure you want to delete this student?",
                         function(result) {
@@ -80,16 +80,16 @@
                                     url: "/api/students/" + button.attr("data-student-id"),
                                     method: "Delete",
                                     success: function() {
-                                        table.row(button.parents("tr")).remove().draw();
+                                        table.row(button.parents("tr")).remove().draw().reload();
                                     }
                                 });
                             }
                         });
                 });
 
-            $("#students").on('change', '#action1', function () {
-                var value = $(this).val();
-                var rowData = table.row($(this).parents('tr')).data();
+            $("#students").change('#actionChk', function (e) {
+                var value = $(e.target).val();
+                var rowData = table.row($(e.target).parents('tr')).data();
                 $.ajax({
                     type: "Put",
                     url: "/api/students?id=" + rowData.id + '&isSelected=' + value,
