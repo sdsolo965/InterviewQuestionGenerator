@@ -435,6 +435,10 @@
     <Compile Include="Migrations\201805232012435_AddedIsSelectedToStudent.Designer.cs">
       <DependentUpon>201805232012435_AddedIsSelectedToStudent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805251322236_AddedIsSelectedToQuestions.cs" />
+    <Compile Include="Migrations\201805251322236_AddedIsSelectedToQuestions.Designer.cs">
+      <DependentUpon>201805251322236_AddedIsSelectedToQuestions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CohortType.cs" />
@@ -737,6 +741,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805232012435_AddedIsSelectedToStudent.resx">
       <DependentUpon>201805232012435_AddedIsSelectedToStudent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805251322236_AddedIsSelectedToQuestions.resx">
+      <DependentUpon>201805251322236_AddedIsSelectedToQuestions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

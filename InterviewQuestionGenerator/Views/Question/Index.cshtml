@@ -15,6 +15,7 @@
     <table id="questions" class="table table-responsive table-hover">
         <thead>
         <tr>
+            <th>Active</th>
             <th>Question</th>
             <th>Category</th>
             <th>Edit</th>
@@ -36,6 +37,14 @@
                 },
                 columns:
                 [
+                    {
+                        data: "isSelected",
+                        render: function(data) {
+                            return (data === true)
+                                ? "<input type='checkbox' id='actionChk' value=" + data + " checked >"
+                                : "<input type='checkbox' id='action1' value=" + data + " >";
+                        }
+                    },
                     {
                         data: "question"
                     },
@@ -59,8 +68,8 @@
 
             $("#questions").on("click",
                 ".js-delete",
-                function() {
-                    var button = $(this);
+                function(e) {
+                    var button = $(e.target);
 
                     bootbox.confirm("Are you sure you want to delete this question?",
                         function(result) {
@@ -68,13 +77,27 @@
                                 $.ajax({
                                     url: "/api/questions/" + button.attr("data-question-id"),
                                     method: "Delete",
-                                    success: function () {
-                                        table.row(button.parents("tr")).remove().draw();
+                                    success: function() {
+                                        table.row(button.parents("tr")).remove().draw().reload();
                                     }
                                 });
                             }
                         });
                 });
+
+            $("#questions").change('#actionChk', function (e) {
+                var value = $(e.target).val();
+                var rowData = table.row($(e.target).parents('tr')).data();
+                $.ajax({
+                    type: "Put",
+                    url: "/api/questions?id=" + rowData.id + '&isSelected=' + value,
+                    async: true,
+                    success: function (msg) {
+                        bootbox.alert("Question has been updated for this study session");
+                        table.ajax.reload();
+                    }
+                });
+            });
         });
     </script>
 }

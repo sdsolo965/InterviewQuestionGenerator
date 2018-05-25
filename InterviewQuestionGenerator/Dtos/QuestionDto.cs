@@ -16,5 +16,7 @@ namespace InterviewQuestionGenerator.Dtos
         public QuestionCategoryDto QuestionCategory { get; set; }
 
         public byte QuestionCategoryId { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }

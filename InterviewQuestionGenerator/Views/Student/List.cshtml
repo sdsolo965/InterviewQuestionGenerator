@@ -62,14 +62,14 @@
                     {
                         data: "id",
                         render: function(data) {
-                            return "<button class='btn-link .js-delete' id='actionDel' data-student-id=" + data + ">Delete</button>";
+                            return "<button class='btn-link js-delete' id='actionDel' data-student-id=" + data + ">Delete</button>";
                         }
                     }
                 ]
             });
 
             $("#students").on("click",
-                "#actionDel",
+                ".js-delete",
                 function(e) {
                     var button = $(e.target);
 
@@ -95,7 +95,7 @@
                     url: "/api/students?id=" + rowData.id + '&isSelected=' + value,
                     async: true,
                     success: function (msg) {
-                        bootbox.alert("Student has been updated for this session");
+                        bootbox.alert("Student has been updated for this study session");
                         table.ajax.reload();
                     }
                 });

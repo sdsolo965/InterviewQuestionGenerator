@@ -18,5 +18,7 @@ namespace InterviewQuestionGenerator.Models
         [Required(ErrorMessage = "Please give the Question a Category.")]
         [Display(Name = "Question Category")]
         public byte QuestionCategoryId { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }

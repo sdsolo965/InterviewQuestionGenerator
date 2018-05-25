@@ -86,7 +86,7 @@ namespace InterviewQuestionGenerator.Controllers.Api
             if (studentInDb == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            studentInDb.IsSelectedForQuestions = (isSelected == true) ? false : true;
+            studentInDb.IsSelectedForQuestions = (isSelected != true);
 
             _context.SaveChanges();
         }
