@@ -20,16 +20,7 @@ namespace InterviewQuestionGenerator.Controllers
         // GET: Student
         public ActionResult Random()
         {
-            Random randomNum = new Random();
-            var students = _context.Students.Select(s => s.IsSelectedForQuestions == true).ToList();
-            int randomId = randomNum.Next(1, students.Count()+1);
-
-
-
-
-
             return View();
-
         }
 
         public ViewResult Index()

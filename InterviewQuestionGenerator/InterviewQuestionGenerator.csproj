@@ -395,6 +395,7 @@
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Dtos\QuestionCategoryDto.cs" />
     <Compile Include="Dtos\QuestionDto.cs" />
+    <Compile Include="Dtos\RandomDto.cs" />
     <Compile Include="Dtos\StudentDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -35,7 +35,7 @@
 
             var table = $("#students").DataTable({
                 ajax: {
-                    url: "/api/students",
+                    url: "/api/students/GetStudents",
                     dataSrc: ""
                 },
                 columns:
@@ -92,7 +92,7 @@
                 var rowData = table.row($(e.target).parents('tr')).data();
                 $.ajax({
                     type: "Put",
-                    url: "/api/students?id=" + rowData.id + '&isSelected=' + value,
+                    url: "/api/students/" + rowData.id + '/' + value,
                     async: true,
                     success: function (msg) {
                         bootbox.alert("Student has been updated for this study session");

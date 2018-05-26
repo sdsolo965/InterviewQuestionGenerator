@@ -18,9 +18,21 @@ namespace InterviewQuestionGenerator
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                "ApiGetByAction",
+                "api/{controller}/{action}",
+                new { id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                "ApiUpdateSelectedStudent",
+                "api/{controller}/{id}/{isSelected}",
+                new { id = RouteParameter.Optional, isSelected = RouteParameter.Optional }
             );
         }
     }

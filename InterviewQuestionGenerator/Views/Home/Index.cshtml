@@ -1,11 +1,12 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="jumbotron text-center">
     <h1>MSSA Interview Question Generator</h1>
     <p class="lead">From behavioral questions to sorting algorithms, test your knowledge and prepare for an interview</p>
-    @Html.ActionLink("Test Now", "Random", "Question", null, new { @class = "btn btn-primary" })
+    <button class="btn btn-primary js-getRandom">Test Now!</button>
 </div>
 
 <div class="row">
@@ -31,3 +32,31 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">See more &raquo;</a></p>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        $(".jumbotron").on("click",
+            ".js-getRandom",
+            function getRandomStudentAndQuestion() {
+                $.ajax({
+                    url: '/api/students/GetRandom',
+                    success: function(data) {
+                        bootbox.dialog({
+                            title: data.student.name,
+                            message: data.question.question,
+                            buttons: {
+                                ok: {
+                                    label: "Next Question",
+                                    className: 'btn-info',
+                                    callback: function(){
+                                        getRandomStudentAndQuestion();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+                    
+            });
+    </script>
+}

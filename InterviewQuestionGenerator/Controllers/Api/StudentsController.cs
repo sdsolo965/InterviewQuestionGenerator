@@ -20,6 +20,25 @@ namespace InterviewQuestionGenerator.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
+        //GET /api/student/GetRandom
+        [HttpGet]
+        public IHttpActionResult GetRandom()
+        {
+            Random randomNum = new Random();
+            var students = _context.Students.Where(s => s.IsSelectedForQuestions == true).ToList();
+            var questions = _context.Questions.Where(q => q.IsSelected == true).ToList();
+            int randomStudent = randomNum.Next(1, students.Count() + 1);
+            int randomQuestion = randomNum.Next(1, questions.Count() + 1);
+
+            RandomDto randomDto = new RandomDto()
+            {
+                Question = questions[randomQuestion-1],
+                Student = students[randomStudent-1]
+            };
+
+            return Ok(randomDto);
+        }
+
         //GET /api/student
         [HttpGet]
         public IHttpActionResult GetStudents()
