@@ -6,7 +6,8 @@
 <div class="jumbotron text-center">
     <h1>MSSA Interview Question Generator</h1>
     <p class="lead">From behavioral questions to sorting algorithms, test your knowledge and prepare for an interview</p>
-    <button class="btn btn-primary js-getRandom">Test Now!</button>
+    @*<button class="btn btn-primary js-getRandom">Test Now!</button>*@
+    @Html.ActionLink("Test Now!", "Random", "Student", null, new { @class = "btn btn-success btn-lg" })
 </div>
 
 <div class="row">
@@ -15,48 +16,24 @@
         <p>
             Microsoft Software and Systems Academy provides you with a lot of technical resources but it's up to you to decide how you learn best!.
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">See more &raquo;</a></p>
+        <p>
+            <a href="@Url.Action("Technical", "Resource")" class="btn btn-primary">See more &raquo;</a>
+            <i class="fas fa-book-open"></i>
+        </p>
     </div>
     <div class="col-md-4">
         <h2>Career Resources</h2>
         <p>
             With the Help of Lee Hecht Harrison, Jobplex and your Microsoft mentors the information for career development is ENDLESS, let's try to organize all that a little!
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">See more &raquo;</a></p>
+        <p><a href="@Url.Action("Career", "Resource")" class="btn btn-primary">See more &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>This Week in MSSA</h2>
         <p>
             Check out whats happening this week at the Ft. Bragg Microsoft Software and Systems Academy!
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">See more &raquo;</a></p>
+        <p><a href="@Url.Action("Calendar", "Resource")" class="btn btn-primary">See more &raquo;</a></p>
     </div>
 </div>
-@section scripts
-{
-    <script>
-        $(".jumbotron").on("click",
-            ".js-getRandom",
-            function getRandomStudentAndQuestion() {
-                $.ajax({
-                    url: '/api/students/GetRandom',
-                    success: function(data) {
-                        bootbox.dialog({
-                            title: data.student.name,
-                            message: data.question.question,
-                            buttons: {
-                                ok: {
-                                    label: "Next Question",
-                                    className: 'btn-info',
-                                    callback: function(){
-                                        getRandomStudentAndQuestion();
-                                    }
-                                }
-                            }
-                        });
-                    }
-                });
-                    
-            });
-    </script>
-}
+

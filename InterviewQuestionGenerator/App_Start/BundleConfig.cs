@@ -29,7 +29,9 @@ namespace InterviewQuestionGenerator
                       "~/Content/bootstrap.css",
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/zocial.css"));
+                      "~/Content/zocial.css," +
+                      "~/Content/font-awesome/fontawesome-all.css," +
+                      "~/Content/font-awesome/fontawesome.css"));
         }
     }
 }

@@ -14,6 +14,7 @@
     <table id="students" class="table table-responsive table-hover">
         <thead>
             <tr>
+                <th>Active</th>
                 <th>Student Name</th>
                 <th>Cohort</th>
             </tr>
@@ -28,11 +29,18 @@
         $(document).ready(function () {
             var table = $("#students").DataTable({
                     ajax: {
-                        url: "/api/students",
+                        url: "/api/students/GetStudents",
                         dataSrc: ""
                     },
                     columns:
-                    [
+                        [
+                            {
+                                data: "isSelectedForQuestions",
+                                render: function(data) {
+                                    return (data === true) ? "<input type='checkbox' id='actionChk' value=" + data + " checked >" :
+                                        "<input type='checkbox' id='action1' value=" + data + " >";
+                                }
+                            },
                         {
                             data: "name"
                             },

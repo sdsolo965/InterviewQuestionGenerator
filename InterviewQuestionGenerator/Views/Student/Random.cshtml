@@ -1,10 +1,43 @@
-﻿@model InterviewQuestionGenerator.Models.Student
-@{
+﻿@{
     ViewBag.Title = "Random";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Random Student</h2>
+<div class="jumbotron">
+    <h1 class="display-3">Test Center</h1>
+    <p class="lead">Test yourself or get better with classmates.  Either way, continue to improve for your upcoming interviews!</p>
+    <hr class="my-4">
+    <p></p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg js-getRandom" href="#" role="button">Generate Question</a>
+    </p>
+</div>
 
-<h3>@Model.Name</h3>
+@section scripts
+{
+    <script>
+        $(".jumbotron").on("click",
+            ".js-getRandom",
+            function getRandomStudentAndQuestion() {
+                $.ajax({
+                    url: '/api/students/GetRandom',
+                    success: function(data) {
+                        bootbox.dialog({
+                            title: data.student.name,
+                            message: data.question.question,
+                            buttons: {
+                                ok: {
+                                    label: "Next Question",
+                                    className: 'btn-info',
+                                    callback: function(){
+                                        getRandomStudentAndQuestion();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
 
+            });
+    </script>
+}
