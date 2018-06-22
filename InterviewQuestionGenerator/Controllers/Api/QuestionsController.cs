@@ -75,7 +75,7 @@ namespace InterviewQuestionGenerator.Controllers.Api
         }
 
         [HttpPut]
-        public void UpdateStudent(int id, bool isSelected)
+        public void UpdateQuestion(int id, bool isSelected)
         {
 
             var questionInDb = _context.Questions.SingleOrDefault(s => s.Id == id);

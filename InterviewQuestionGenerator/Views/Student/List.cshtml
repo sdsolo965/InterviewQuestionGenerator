@@ -77,7 +77,7 @@
                         function(result) {
                             if (result) {
                                 $.ajax({
-                                    url: "/api/students/" + button.attr("data-student-id"),
+                                    url: "/api/students/DeleteStudent/" + button.attr("data-student-id"),
                                     method: "Delete",
                                     success: function() {
                                         table.row(button.parents("tr")).remove().draw().reload();
@@ -92,7 +92,7 @@
                 var rowData = table.row($(e.target).parents('tr')).data();
                 $.ajax({
                     type: "Put",
-                    url: "/api/students/" + rowData.id + '/' + value,
+                    url: "/api/students/UpdateStudent/" + rowData.id + '/' + value,
                     async: true,
                     success: function (msg) {
                         bootbox.alert("Student has been updated for this study session");

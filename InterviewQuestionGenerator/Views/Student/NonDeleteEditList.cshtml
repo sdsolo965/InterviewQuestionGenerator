@@ -46,8 +46,22 @@
                             },
                         {
                             data: "cohortType.name"
-                        },
+                        }
                 ]
+            });
+
+            $("#students").change('#actionChk', function (e) {
+                var value = $(e.target).val();
+                var rowData = table.row($(e.target).parents('tr')).data();
+                $.ajax({
+                    type: "Put",
+                    url: "/api/students/" + rowData.id + '/' + value,
+                    async: true,
+                    success: function (msg) {
+                        bootbox.alert("Student has been updated for this study session");
+                        table.ajax.reload();
+                    }
+                });
             });
         });
 </script>
